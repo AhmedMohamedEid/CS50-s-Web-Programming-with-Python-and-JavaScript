@@ -1,0 +1,42 @@
+
+$myFontSize: 18px;
+
+#header {
+	background: #f5f5f5;
+}
+
+
+#header ul li a:hover ,ul li a {
+	text-decoration: none;
+    color: #040404;
+}
+
+a[target=_blank] {
+	text-shadow: 1px 4px 2px #cacaca;
+}
+
+li a:active{
+	background: #fff
+}
+ul > li {
+	list-style: none;
+    display: inline-block;
+    margin: 10px;
+    padding: 5px;
+    font-size:$myFontSize;
+    font-weight: bold;
+}
+
+.my-img img {
+    box-shadow: 5px 10px #f7f5f5;
+}
+.my-img p {
+	padding-bottom: 15px;
+    margin-top: 15px;
+}
+
+@media (min-width: 576px) { 
+
+
+
+ }
