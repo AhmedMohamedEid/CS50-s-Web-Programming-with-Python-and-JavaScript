@@ -1,6 +1,24 @@
 
 $myFontSize: 18px;
 
+
+@media screen and (max-width: 600px) {
+  body {
+    background-color: lightblue !important;
+  }
+}
+
+@media screen and (min-width: 400px) and (max-width: 800px) {
+  body {
+    background-color: lightgreen;
+  }
+}
+/*
+@media screen and (max-width: 800px) {
+  body {
+    background-color: lavender;
+  }
+}*/
 #header {
 	background: #f5f5f5;
 }
@@ -35,8 +53,3 @@ ul > li {
     margin-top: 15px;
 }
 
-@media (min-width: 576px) { 
-
-
-
- }
