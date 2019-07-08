@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>My Webpage</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>My Interests</title>
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     </head>
-    <body>
-        <nav class="navbar navbar-expand-lg text-primary">
+    <body style="background-image:none">
+        <nav class="navbar navbar-expand-lg text-light bg-dark">
                 <a class="navbar-brand" href="#">My Webpage</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="collapse navbar-collapse color" id="navbarNavAltMarkup">
                     <div class="navbar-nav">
                     <a class="nav-item nav-link active" href="index.html">Home <span class="sr-only">(current)</span></a>
                     <a class="nav-item nav-link" href="example.html">Example</a>
@@ -24,13 +21,21 @@
                 </div>
         </nav>
 
-        <div class="menu">
-            <h1 class="text-success">I'm Marco Richetta</h1>
-
-            <ol>
-                <a href="example.html"><li>Example</li></a>
-                <a id="Important" href="grid.html"><li>Grid example</li></a>
-            </ol>
+        <div class="container-fluid bg-white">
+            <div class="row text-primary">
+                <div class="col-md">
+                    <h4>First column</h4>
+                    <div class="alert alert-success" role="alert">
+                        <h4 class="alert-heading">This is a success alert.</h4>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <h4>Second Column</h4>
+                    <div class="alert alert-info" role="alert">
+                        <h4 class="alert-heading">This is an info alert.</h4>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 </html>
