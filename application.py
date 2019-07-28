@@ -40,6 +40,24 @@ def index():
     return render_template("index.html")
 
 
+@app.route("/book", methods=["GET","POST"])
+def book():
+
+    if request.method == "POST":
+        search = request.form.get("search")
+        print(search)
+        if search != "":
+            search_result = db.execute("SELECT * FROM books WHERE LOWER(isbn) LIKE :book OR LOWER(title) LIKE :book OR author LIKE :book", {"book": '%'+search+'%'}).fetchall()
+            if not search_result:
+                message = "Not Books ware found. Please search again"
+                return render_template("book.html", message=message)
+
+
+            return render_template("book.html", books=search_result, search=search)
+
+    else:
+        return redirect("/")
+
     # User Register Page #
 @app.route("/registration", methods=['GET','POST'])
 def register_page():

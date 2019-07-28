@@ -17,3 +17,20 @@
   margin: auto;
   padding: 25px;
 }
+
+.search-box-book {
+  margin: 1% auto;
+  max-width: 75%;
+  min-width: 50%;
+}
+
+.search-box-book button {
+  height: 46px
+}
+
+
+/* bootstrap */
+.card{
+  margin: .5em auto;
+
+}
