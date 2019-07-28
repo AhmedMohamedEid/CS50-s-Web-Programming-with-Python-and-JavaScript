@@ -1,0 +1,19 @@
+.search-box{
+  margin: 17% auto;
+}
+
+.search-box .form-control {
+    width: 88%;
+    display: inline;
+    height: 3em;
+}
+.search-box button{
+  width: 11%;
+  height: 60px;
+}
+
+.login {
+  width: 50%;
+  margin: auto;
+  padding: 25px;
+}

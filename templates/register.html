@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block title %}
+    Register
+{% endblock %}
+
+{% block body %}
+<div class="header">
+  <h1 class="text-center">Register</h1>
+</div>
+<div class="login">
+  <form action="{{ url_for("register_page") }}" method="POST">
+    <div class="form-group">
+      <label for="exampleInputName">Name</label>
+      <input type="text" class="form-control" name="name" id="exampleInputName" placeholder="Enter your Name">
+    </div>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Email address</label>
+      <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+    <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Password</label>
+      <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Password">
+    </div>
+    <button type="submit" class="btn btn-primary">Register</button>
+    <a class="btn btn-success" href="{{ url_for('login_page') }}">Login</a>
+  </form>
+</div>
+
+{% endblock %}
