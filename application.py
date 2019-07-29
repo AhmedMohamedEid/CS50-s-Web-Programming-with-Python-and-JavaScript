@@ -66,10 +66,10 @@ def book():
                 # return render_template("index.html", )
 
         if search != "":
-            search_result = db.execute("SELECT * FROM books WHERE LOWER(isbn) LIKE :book OR LOWER(title) LIKE :book OR author LIKE :book", {"book": '%'+search+'%'}).fetchall()
+            search_result = db.execute("SELECT * FROM books WHERE LOWER(isbn) LIKE :book OR title LIKE :book OR author LIKE :book", {"book": '%'+search+'%'}).fetchall()
             if not search_result:
-                message = "Not Books ware found. Please search again"
-                return render_template("book.html", message=message)
+                message = "No Books ware found. Please search again"
+                return render_template("book.html", message=message, search=search)
 
 
             return render_template("book.html", books=search_result, search=search)
