@@ -45,7 +45,26 @@ def book():
 
     if request.method == "POST":
         search = request.form.get("search")
-        print(search)
+
+        isbn_review = request.form.get("book_id_review")
+        book_id_review = request.form.get("book_id")
+
+        rating = request.form.get("rating")
+        review = request.form.get("review")
+
+        if isbn_review or rating or review:
+            # check if entry exist
+            result = db.execute("SELECT * FROM reviews WHERE isbn = :isbn AND user_id = :user ",{"isbn":isbn_review, "user": session["user_id"] }).fetchone()
+
+            if not result:
+                db.execute("INSERT INTO reviews (isbn, user_id, rating, rating_text) VALUES (:isbn, :user_id, :rating, :review)",{"isbn":isbn_review, "user_id": session["user_id"], "rating": rating, "review": review})
+                db.commit()
+            else:
+                db.execute("UPDATE reviews SET rating = :rating , rating_text =:text WHERE id =:id",{"rating": rating, "text": review, "id": result[0]})
+                db.commit()
+            return book_detail(book_id_review)
+                # return render_template("index.html", )
+
         if search != "":
             search_result = db.execute("SELECT * FROM books WHERE LOWER(isbn) LIKE :book OR LOWER(title) LIKE :book OR author LIKE :book", {"book": '%'+search+'%'}).fetchall()
             if not search_result:
