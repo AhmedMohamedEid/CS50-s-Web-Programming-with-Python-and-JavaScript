@@ -1,0 +1,261 @@
+{% extends "layout.html" %}
+{% block title %}
+    Search by {{ search }}
+{% endblock %}
+
+{% block body %}
+
+<div class="search-box-book search-box">
+  <form action="/book" method="POST">
+    <div class="form-group">
+      <input class="form-control form-control-md" name="search" type="search" value="{{ search }}" placeholder="Search Book BY ISBN or Title or Author" aria-label="Search" />
+      <button class="btn btn-outline-success btn-md my-2 my-sm-0" type="submit">Search</button>
+    </div>
+  </form>
+</div>
+
+  {% if books %}
+    <h3 class="text-center">Search By {{ search }}</h3>
+    <div class="row">
+      {% for book in books %}
+      <!-- <a href=""> -->
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">{{ book.title }}</h5>
+                  <p class="card-text">The ISBN: {{ book.isbn }} and Author: {{ book.author }}.</p>
+                  <a href="/book/{{ book.id }}" class="btn btn-primary">More Details</a>
+                </div>
+            </div>
+        </div>
+      <!-- </a> -->
+      {% endfor %}
+    </div>
+
+  {% elif book_detail %}
+
+    <div class="card">
+      <h5 class="card-header">Book Details</h5>
+      <div class="card-body">
+        <h5 class="card-title">{{ book_detail.title }}</h5>
+        <p class="card-text">ISBN: {{ book_detail.isbn }}</p>
+        <p class="card-text">Author: {{ book_detail.author }}</p>
+        <p class="card-text">Year: {{ book_detail.year }} </p>
+      </div>
+    </div>
+
+    <div class="rating-and-reviews">
+
+      <div class="row">
+          <div class="col-sm-8">
+            <form class="was-validated" action="/book" method="POST">
+              <input type="hidden" name="stored_search" value=""/>
+    					<input type="hidden" name="book_id_review" value="{{ book_detail.isbn }}"/>
+    					<input type="hidden" name="book_id" value="{{ book_detail.id }}"/>
+
+              <div class="form-group">
+                <label for="customRange3">Rating</label>
+                <input class="form-control" type="range" name="rating" class="custom-range" min="0" max="5" step="0.2" id="customRange3">
+              </div>
+              <!-- <div id="rating_star">
+                <div class="stars-outer">
+                  <div class="stars-inner"></div>
+                </div>
+              </div> -->
+              <div class="mb-3">
+                <label for="validationTextarea">Review</label>
+                <textarea class="form-control" id="validationTextarea" name="review" placeholder="Required example textarea" required></textarea>
+                <!-- <div class="invalid-feedback">
+                  Please enter a message in the textarea.
+                </div> -->
+              </div>
+              <button class="btn btn-sm btn-primary" type="submit">Submit Review</button>
+              </form>
+          </div> <!-- /col-sm-8 -->
+
+          <div class="col-sm-4">
+
+                        <!-- Add icon library -->
+        {% if rating_detail %}
+
+            <span class="heading">User Rating</span>
+            <span id="rating_star">
+                <div class="stars-outer">
+                  <div class="stars-inner" style="width:{{ rating_detail[0]/5 * 100 }}%"></div>
+                </div>
+            </span>
+            <p>{{ rating_detail[0] }} average based on {{ rating_detail[1] }} reviews.</p>
+            <hr style="border:3px solid #f1f1f1">
+
+            <div class="row">
+              <div class="side">
+                <div>5 star</div>
+              </div>
+              <div class="middle">
+                <div class="progress">
+                  <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+              <div class="side right">
+                <div>150</div>
+              </div>
+
+              <div class="side">
+                <div>4 star</div>
+              </div>
+              <div class="middle">
+                <div class="progress">
+                  <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+              <div class="side right">
+                <div>63</div>
+              </div>
+
+              <div class="side">
+                <div>3 star</div>
+              </div>
+              <div class="middle">
+                <div class="progress">
+                  <div class="progress-bar bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+              <div class="side right">
+                <div>15</div>
+              </div>
+              <div class="side">
+                <div>2 star</div>
+              </div>
+              <div class="middle">
+                <div class="progress">
+                  <div class="progress-bar bg-primary" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+              <div class="side right">
+                <div>6</div>
+              </div>
+              <div class="side">
+                <div>1 star</div>
+              </div>
+              <div class="middle">
+                <div class="progress">
+                  <div class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+              <div class="side right">
+                <div>20</div>
+              </div>
+            </div>
+            {% else %}
+            <span class="heading">User Rating</span>
+            <span id="rating_star">
+                <div class="stars-outer">
+                  <div class="stars-inner""></div>
+                </div>
+            </span>
+            <p>0.00 average based on 0 reviews.</p>
+            <hr style="border:3px solid #f1f1f1">
+
+            <div class="row">
+              <div class="side">
+                <div>5 star</div>
+              </div>
+              <div class="middle">
+                <div class="progress">
+                  <div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+              <div class="side right">
+                <div>0</div>
+              </div>
+
+              <div class="side">
+                <div>4 star</div>
+              </div>
+              <div class="middle">
+                <div class="progress">
+                  <div class="progress-bar bg-info" role="progressbar" style="width: 0%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+              <div class="side right">
+                <div>0</div>
+              </div>
+
+              <div class="side">
+                <div>3 star</div>
+              </div>
+              <div class="middle">
+                <div class="progress">
+                  <div class="progress-bar bg-warning" role="progressbar" style="width: 0%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+              <div class="side right">
+                <div>0</div>
+              </div>
+              <div class="side">
+                <div>2 star</div>
+              </div>
+              <div class="middle">
+                <div class="progress">
+                  <div class="progress-bar bg-primary" role="progressbar" style="width: 0%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+              <div class="side right">
+                <div>0</div>
+              </div>
+              <div class="side">
+                <div>1 star</div>
+              </div>
+              <div class="middle">
+                <div class="progress">
+                  <div class="progress-bar bg-danger" role="progressbar" style="width: 0%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+              <div class="side right">
+                <div>0</div>
+              </div>
+            </div>
+            {% endif %}
+
+
+            </div>
+          </div><!-- /row -->
+      </div>
+
+      <hr/>
+      {% if reviews %}
+      <div class="comunity-review">
+        <div class="header">
+          <h3 class="text-center">Community Review</h3>
+        </div>
+        <div class="media">
+          <div class="media-body">
+            {% for review in reviews  %}
+              <div class="media-item">
+                <h5 class="mt-0">{{ review.name }}</h5>
+                <!-- Display Rating in star form -->
+                <span id="rating_star">
+                    {{ review.rating }}
+                    <div class="stars-outer">
+                      <div class="stars-inner" style="width:{{ review.rating/5 * 100 }}%"></div>
+                    </div>
+                </span>
+
+                <p>{{ review.rating_text }}</p>
+              </div>
+              <hr>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <h5 class="text-center">This Book Not Reviewed Pefore.</h5>
+      {% endif %}
+  {% else %}
+    <div class="alert alert-danger" role="alert">
+      {{message}}
+    </div>
+  {% endif %}
+
+
+{% endblock %}
