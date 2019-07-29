@@ -73,6 +73,11 @@ def book():
 
 
             return render_template("book.html", books=search_result, search=search)
+        else:
+            message =  "Please Enter Search Key."
+            return render_template("index.html", message=message)
+
+
 
     else:
         return redirect("/")
