@@ -82,6 +82,19 @@ def book():
     else:
         return redirect("/")
 
+@app.route("/book/<int:book_id>")
+def book_detail(book_id):
+
+    rating_detail = []
+    book = db.execute("SELECT * FROM books WHERE id = :book_id", { "book_id": book_id }).fetchone()
+    # print(book)
+    # review = db.execute("SELECT * FROM reviews WHERE isbn = :isbn", { "isbn": book[1] }).fetchall()
+    reviews = db.execute("SELECT reviews.*, users.name FROM reviews INNER JOIN users ON reviews.user_id = users.id WHERE isbn = :isbn", { "isbn": book[1] }).fetchall()
+    if reviews :
+        rating_detail = db.execute("SELECT AVG(rating), COUNT(*) FROM reviews WHERE isbn = :isbn", { "isbn": book[1] }).fetchone()
+    print(rating_detail)
+    return render_template("book.html", book_detail=book, reviews=reviews, rating_detail=rating_detail)
+
     # User Register Page #
 @app.route("/registration", methods=['GET','POST'])
 def register_page():

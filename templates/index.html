@@ -7,10 +7,15 @@
 <div class="search-box">
   <form action="{{ url_for("book") }}" method="POST">
     <div class="form-group">
-      <input class="form-control form-control-lg" name="search" type="search" placeholder="Search Book BY ISBN" aria-label="Search" />
+      <input class="form-control form-control-lg" name="search" type="search" aria-describedby="searchHelp" placeholder="Search Book BY ISBN or Title or Author" aria-label="Search" />
       <button class="btn btn-outline-success btn-lg my-2 my-sm-0" type="submit">Search</button>
+      {% if message %}
+        <small id="searchHelp" class="form-text text-danger">{{ message }}</small>
+      {% endif %}
     </div>
   </form>
 </div>
+
+
 
 {% endblock %}
