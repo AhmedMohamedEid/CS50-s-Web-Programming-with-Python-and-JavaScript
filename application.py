@@ -186,10 +186,12 @@ def register_page():
     if request.method == 'POST':
         name = request.form.get("name")
         email = request.form.get("email")
-        password = generate_password_hash(request.form.get("password"))
+        password = request.form.get("password")
+        hash_password = generate_password_hash(password)
         print (password)
+        print (hash_password)
         if db.execute("SELECT email FROM users WHERE email = :email", {"email": email}).rowcount == 0:
-            db.execute("INSERT INTO users (name, email, password) VALUES(:name, :email, :password)", {"name":name, "email": email,"password":password})
+            db.execute("INSERT INTO users (name, email, password) VALUES(:name, :email, :password)", {"name":name, "email": email,"password":hash_password})
             db.commit()
 
             # Get Username to store Session
@@ -207,29 +209,33 @@ def register_page():
 @app.route("/login", methods=['GET','POST'])
 def login_page():
     # Forget All Session_id
-    session.clear()
 
     if request.method == "POST":
         email = request.form.get("email")
         password = request.form.get("password")
-        print(password)
-        # hash_password = generate_password_hash(password)
-        # print(hash_password)
+
         result = db.execute("SELECT * FROM users WHERE email = :email",{"email":email}).fetchone()
-        print(result)
-        print(result[3])
+        # print(result)
         if result:
-            # session["user_id"] = result[0]
-            # session["user_name"] = result[1]
-            # return redirect("/")
-            print(check_password_hash(result[3], password))
-            return render_template("login.html")
+            check_password = check_password_hash(result[3].strip(), password)
+            if check_password:
+                session["user_id"] = result[0]
+                session["user_name"] = result[1]
+                return redirect("/")
+            else:
+                flash("Invalid username or password. Please try again!", 'warning')
+                return render_template("login.html", email = email)
         else:
-            print("Error")
+            flash("Invalid username or password. Please try again!", 'warning')
             return render_template("login.html")
     else:
+        session.clear()
         return render_template("login.html")
 
+
+@app.route("/error/404")
+def page404():
+    return render_template("page404.html")
 
 @app.route("/logout")
 def logout_page():
